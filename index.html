@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Text Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Minecraft Text Editor</h1>
+        <div>
+            <label>
+                <input type="checkbox" id="animationCheck" onclick="toggleAnimation()"> Animasyon
+            </label>
+        </div>
+        <div id="animationOptions" class="hidden">
+            <label>
+                <input type="radio" name="animationType" value="bossbar" checked onclick="toggleAnimationType()"> Bossbar
+            </label>
+            <label>
+                <input type="radio" name="animationType" value="tellraw" onclick="toggleAnimationType()"> Tellraw
+            </label>
+            <div id="bossbarOptions">
+                <label>Bossbar Adı: <input type="text" id="bossbarName"></label>
+                <label>Datapack Adı: <input type="text" id="datapackName"></label>
+                <label>Klasör Adı: <input type="text" id="folderName"></label>
+            </div>
+            <div id="tellrawOptions" class="hidden">
+                <label>Datapack Adı: <input type="text" id="datapackName2"></label>
+                <label>Klasör Adı: <input type="text" id="folderName2"></label>
+                <label>Oyuncu Seçici: <input type="text" id="playerSelector"></label>
+            </div>
+        </div>
+        <div id="entries"></div>
+        <button onclick="addEntry()">Metin Ekle +</button>
+        <button onclick="generateOutput()">Oluştur</button>
+        <div id="outputContainer">
+            <h2>Çıktı</h2>
+            <textarea id="output" readonly></textarea>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
