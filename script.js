@@ -79,9 +79,9 @@ function generateOutput() {
             const datapackName = document.getElementById("datapackName").value;
             const folderName = document.getElementById("folderName").value;
 
+            let combinedText = [];
             for (let i = 0; i < data.length; i++) {
                 const entry = data[i];
-                let combinedText = [];
                 for (let j = 0; j < entry.text.length; j++) {
                     combinedText.push({
                         text: entry.text[j],
@@ -89,16 +89,28 @@ function generateOutput() {
                         italic: entry.italic,
                         color: entry.color
                     });
+                    let message = combinedText.map(item => ({
+                        text: item.text,
+                        bold: item.bold,
+                        italic: item.italic,
+                        color: item.color
+                    }));
                     commands.push({
                         filename: `${folderName}/${commandIndex}.mcfunction`,
-                        content: `bossbar set ${bossbarName} name ${JSON.stringify(combinedText)}\nschedule function ${datapackName}:${folderName}/${commandIndex + 1} ${entry.letter_delay}t`
+                        content: `bossbar set ${bossbarName} name ${JSON.stringify(message)}\nschedule function ${datapackName}:${folderName}/${commandIndex + 1} ${entry.letter_delay}t`
                     });
                     commandIndex++;
                 }
                 if (i < data.length - 1) {
+                    let message = combinedText.map(item => ({
+                        text: item.text,
+                        bold: item.bold,
+                        italic: item.italic,
+                        color: item.color
+                    }));
                     commands.push({
                         filename: `${folderName}/${commandIndex}.mcfunction`,
-                        content: `bossbar set ${bossbarName} name ${JSON.stringify(combinedText)}\nschedule function ${datapackName}:${folderName}/${commandIndex + 1} ${entry.transition_delay}t`
+                        content: `bossbar set ${bossbarName} name ${JSON.stringify(message)}\nschedule function ${datapackName}:${folderName}/${commandIndex + 1} ${entry.transition_delay}t`
                     });
                     commandIndex++;
                 }
@@ -124,7 +136,7 @@ function generateOutput() {
                         italic: item.italic,
                         color: item.color
                     }));
-                    message = JSON.stringify([{ text: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" }, ...message, { text: "\n\n\n\n" }]);
+                    message = JSON.stringify([{ text: "\n\n\n\n\n\n" }, ...message, { text: "\n\n\n\n" }]);
                     commands.push({
                         filename: `${folderName}/${commandIndex}.mcfunction`,
                         content: `tellraw ${playerSelector} ${message}\nschedule function ${datapackName}:${folderName}/${commandIndex + 1} ${entry.letter_delay}t`
@@ -138,7 +150,7 @@ function generateOutput() {
                         italic: item.italic,
                         color: item.color
                     }));
-                    message = JSON.stringify([{ text: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" }, ...message, { text: "\n\n\n\n" }]);
+                    message = JSON.stringify([{ text: "\n\n\n\n\n\n" }, ...message, { text: "\n\n\n\n" }]);
                     commands.push({
                         filename: `${folderName}/${commandIndex}.mcfunction`,
                         content: `tellraw ${playerSelector} ${message}\nschedule function ${datapackName}:${folderName}/${commandIndex + 1} ${entry.transition_delay}t`
