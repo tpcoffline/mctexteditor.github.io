@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     addEntry(true); // Add the default entry on load
+    updatePreview(); // Update the preview on load
 });
 
 function toggleAnimation() {
@@ -34,10 +35,10 @@ function addEntry(isDefault = false) {
     const entryDiv = document.createElement("div");
 
     entryDiv.innerHTML = `
-        <label>Metin: <input type="text" class="text"></label>
-        <label><input type="checkbox" class="bold"> Bold</label>
-        <label><input type="checkbox" class="italic"> Italic</label>
-        <label>Renk: <input type="color" class="color" value="#FFFFFF"></label>
+        <label>Metin: <input type="text" class="text" oninput="updatePreview()"></label>
+        <label><input type="checkbox" class="bold" onclick="updatePreview()"> Bold</label>
+        <label><input type="checkbox" class="italic" onclick="updatePreview()"> Italic</label>
+        <label>Renk: <input type="color" class="color" value="#FFFFFF" onchange="updatePreview()"></label>
         <label>Harf Süresi: <input type="number" class="letterDelay" value="5" min="0"></label>
         <label>Geçiş Süresi: <input type="number" class="transitionDelay" value="5" min="0"></label>
     `;
@@ -49,10 +50,12 @@ function addEntry(isDefault = false) {
     }
 
     entries.appendChild(entryDiv);
+    updatePreview();
 }
 
 function removeEntry(entryDiv) {
     entryDiv.parentNode.removeChild(entryDiv);
+    updatePreview();
 }
 
 function generateOutput() {
@@ -176,5 +179,27 @@ function downloadZip(files) {
     });
     zip.generateAsync({ type: "blob" }).then(content => {
         saveAs(content, "minecraft_text.zip");
+    });
+}
+
+function updatePreview() {
+    const preview = document.getElementById("preview");
+    const entries = document.querySelectorAll("#entries > div");
+
+    preview.innerHTML = "";
+
+    entries.forEach(entry => {
+        const text = entry.querySelector(".text").value;
+        const bold = entry.querySelector(".bold").checked;
+        const italic = entry.querySelector(".italic").checked;
+        const color = entry.querySelector(".color").value;
+
+        const span = document.createElement("span");
+        span.textContent = text;
+        if (bold) span.classList.add("bold");
+        if (italic) span.classList.add("italic");
+        span.style.color = color;
+
+        preview.appendChild(span);
     });
 }
