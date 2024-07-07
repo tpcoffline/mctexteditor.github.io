@@ -20,7 +20,7 @@ body {
     margin-bottom: 10px;
 }
 
-#outputContainer {
+#outputContainer, #previewContainer {
     margin-top: 20px;
 }
 
@@ -46,4 +46,20 @@ button {
 
 button:hover {
     background: #0056b3;
+}
+
+#preview {
+    background: #333;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Minecraft", monospace; /* Minecraft font */
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
 }
